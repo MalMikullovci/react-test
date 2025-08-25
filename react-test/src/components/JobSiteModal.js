@@ -16,7 +16,8 @@ import {
   CheckOutlined, // Import the Check icon
 } from "@ant-design/icons";
 import { ArrowLeftOutlined } from "@ant-design/icons";
-
+import CancelButton from "../components/CancelButton";
+import SaveButton from "../components/SaveButton";
 const { Title, Text } = Typography;
 const { Option } = Select;
 
@@ -129,53 +130,57 @@ const JobsiteModal = ({ visible, onCancel, onSave, form: externalForm }) => {
           {/* Category */}
           <Col span={16}>
             <Form.Item label="Category Included">
-        <Select
-  data-testid="category-select-0" // ✅ Add this line
-  mode="multiple"
-  open={open}
-  onDropdownVisibleChange={setOpen}
-  placeholder={
-    selectedCategories.length === Object.keys(categoryMeta).length
-      ? "All of them selected"
-      : "Select"
-  }
-  style={inputStyle}
-  value={selectedCategories}
-  onChange={(values) => {
-    setSelectedCategories(values);
-    setOpen(false); // force close after select
-  }}
-  tagRender={() => null}
-  optionRender={(option) => {
-    const isSelected = selectedCategories.includes(option.value);
-    const meta = categoryMeta[option.value];
-    const color = meta?.color || "#ccc";
+              <Select
+                data-testid="category-select-0" // ✅ Add this line
+                mode="multiple"
+                open={open}
+                onDropdownVisibleChange={setOpen}
+                placeholder={
+                  selectedCategories.length === Object.keys(categoryMeta).length
+                    ? "All of them selected"
+                    : "Select"
+                }
+                style={inputStyle}
+                value={selectedCategories}
+                onChange={(values) => {
+                  setSelectedCategories(values);
+                  setOpen(false); // force close after select
+                }}
+                tagRender={() => null}
+                optionRender={(option) => {
+                  const isSelected = selectedCategories.includes(option.value);
+                  const meta = categoryMeta[option.value];
+                  const color = meta?.color || "#ccc";
 
-    return (
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "6px 10px",
-          borderRadius: 6,
-          background: isSelected ? color : "#fff",
-          fontWeight: isSelected ? 600 : 400,
-          color: isSelected ? "#fff" : "#000",
-        }}
-      >
-        <div>{option.label}</div>
-        {isSelected && <CheckOutlined style={{ fontSize: 14, color: "#fff" }} />}
-      </div>
-    );
-  }}
->
-  {Object.keys(categoryMeta).map((cat) => (
-    <Option key={cat} value={cat}>
-      {cat}
-    </Option>
-  ))}
-</Select>
+                  return (
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        padding: "6px 10px",
+                        borderRadius: 6,
+                        background: isSelected ? color : "#fff",
+                        fontWeight: isSelected ? 600 : 400,
+                        color: isSelected ? "#fff" : "#000",
+                      }}
+                    >
+                      <div>{option.label}</div>
+                      {isSelected && (
+                        <CheckOutlined
+                          style={{ fontSize: 14, color: "#fff" }}
+                        />
+                      )}
+                    </div>
+                  );
+                }}
+              >
+                {Object.keys(categoryMeta).map((cat) => (
+                  <Option key={cat} value={cat}>
+                    {cat}
+                  </Option>
+                ))}
+              </Select>
 
               {/* This section for pills below is what the second image shows. 
                  It's a separate UI choice from the first image.
@@ -282,118 +287,12 @@ const JobsiteModal = ({ visible, onCancel, onSave, form: externalForm }) => {
 
         {/* Buttons */}
         <Row justify="end" gutter={16}>
-          <Row justify="end" gutter={16}>
-  <Col>
-    <Button
-      onClick={handleCancel}
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        background: "#FE4C4A",
-        color: "#fff",
-        border: "none",
-        borderRadius: 6,
-        width: 150,
-        height: 32,
-        padding: 0,
-        overflow: "hidden",
-        position: "relative",
-      }}
-    >
-      <span
-        style={{
-          flex: 1,
-          textAlign: "center",
-          justifyContent: "center",
-          color: "#fff",
-          fontSize: 14,
-          fontWeight: 400,
-        }}
-      >
-        Cancel Changes
-      </span>
-      <div
-        style={{
-          position: "absolute",
-          left: "116.66px",
-          top: 0,
-          bottom: 0,
-          width: "1px",
-          background: "#EB4345",
-          opacity: 0.8,
-        }}
-      />
-      <span
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "0 6px",
-          height: "100%",
-        }}
-      >
-        <CloseOutlined style={{ color: "#fff", fontSize: 16 }} />
-      </span>
-    </Button>
-  </Col>
-
-  <Col>
-    <Button
-      type="primary"
-      onClick={handleSave}
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        background: "#71CF48",
-        borderColor: "#71CF48",
-        borderRadius: 6,
-        width: 150,
-        height: 32,
-        padding: 0,
-        overflow: "hidden",
-        position: "relative",
-      }}
-    >
-      <span
-        style={{
-          flex: 1,
-          textAlign: "center",
-          justifyContent: "center",
-          color: "#fff",
-          fontSize: 14,
-          fontWeight: 400,
-        }}
-      >
-        Save Changes
-      </span>
-      <div
-        style={{
-          position: "absolute",
-          left: "116.66px",
-          top: 0,
-          bottom: 0,
-          width: "1px",
-          background: "#68C142",
-          opacity: 0.8,
-        }}
-      />
-      <span
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "0 6px",
-          height: "100%",
-        }}
-      >
-        <CheckOutlined style={{ color: "#fff", fontSize: 16 }} />
-      </span>
-    </Button>
-  </Col>
-</Row>
-
+          <Col>
+            <CancelButton onClick={handleCancel} />
+          </Col>
+          <Col>
+            <SaveButton onClick={handleSave} />
+          </Col>
         </Row>
       </Form>
     </Modal>
