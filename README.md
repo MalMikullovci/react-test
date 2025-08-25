@@ -1,23 +1,7 @@
-⚙️ Setup & Running Locally
+Inventory Management App - Flex Business Solutions Tech Test
+This is a web application for managing inventory across different job sites, built as a technical test for Flex Business Solutions. The app allows users to view, create, and search for job sites, and manage the inventory specific to each site.
 
-Clone Repository
-
-git clone https://github.com/<your-username>/<repo-name>.git
-cd <repo-name>/react-test
-
-Install Dependencies
-
-npm install
-
-Run Development Server
-
-npm start
-
-The app will run on http://localhost:3000
-
-Run Tests
-
-npm test
+The project follows the design specifications provided in the Figma file.
 
 ## 📸 Screenshots
 
@@ -25,54 +9,117 @@ npm test
 
 ![Job Sites List](./screenshots/Screenshot0.png)
 
-### Create Job Site
+### Search Functionality in Job Sites List
 
-![Create Job Site](./screenshots/Screenshot1.png)
+![Search Functionality in Job Sites List](./screenshots/Screenshot1.png)
+
+### Create Job Site Modal
+
+![Create Job Site Modal](./screenshots/Screenshot2.png)
+
+### Options in Modal
+
+![Options in Modal](./screenshots/Screenshot3.png)
 
 ### Inventory Dashboard
 
-![Inventory Dashboard](./screenshots/Screenshot2.png)
+![Inventory Dashboard](./screenshots/Screenshot4.png)
 
-### Update Item Modal
+### Inventory Dashboard with Table
 
-![Update Item Modal](./screenshots/Screenshot3.png)
+![Inventory Dashboard with Table](./screenshots/Screenshot5.png)
 
-### Search & Filter
+### Inventory Dashboard Search Functionality
 
-![Search & Filter](./screenshots/Screenshot4.png)
+![Inventory Dashboard Search Functionality](./screenshots/Screenshot6.png)
 
-Additional questions :
+### Edit Modal in Inventory Dashboard
 
-1.How might you make this app more secure?
+![Edit Modal in Inventory Dashboard](./screenshots/Screenshot7.png)
 
+Export to Sheets
+✨ Features
+Job Site Management: View a list of all job sites with their current status.
+
+Search Functionality: Instantly search for job sites by name.
+
+Create Job Sites: Add new job sites to the list through an intuitive modal.
+
+Inventory Dashboard: View a detailed inventory table for each specific job site.
+
+Inventory Search: Quickly find items within the inventory dashboard.
+
+In-line Editing: Double-click any inventory item to open a modal and update its details.
+
+🛠️ Tech Stack
+React: For building the user interface.
+
+Jest & React Testing Library: For unit and component testing.
+
+(Feel free to add any other libraries you used, e.g., Axios, Material-UI, etc.)
+
+⚙️ Getting Started
+Follow these instructions to get the project running on your local machine.
+
+Prerequisites
+Node.js (v16 or later)
+
+npm
+
+Installation & Running
+Clone the repository:
+
+Bash
+
+git clone https://github.com/<your-username>/<repo-name>.git
+Navigate to the project directory:
+
+Bash
+
+cd <repo-name>/react-test
+Install the dependencies:
+
+Bash
+
+npm install
+Start the development server:
+
+Bash
+
+npm start
+The application will be available at http://localhost:3000.
+
+🧪 Running Tests
+To run the automated tests for this project, use the following command:
+
+Bash
+
+npm test
+🤔 Further Considerations
+Here are some thoughts on how this application could be improved and scaled in a real-world production environment.
+
+How might you make this app more secure?
 There are several layers of security that could be applied to this application:
 
-Authentication & Authorization – Implement a secure login system (e.g., JWT-based auth or OAuth2). Users should only be able to view or modify job sites and inventory if their role permits it. Role-based access control (RBAC) ensures that, for example, only managers can edit or delete inventory items while regular employees may only view them.
+Authentication & Authorization: Implement a secure login system (e.g., JWT-based auth or OAuth2). Users should only be able to view or modify job sites and inventory if their role permits it. Role-based access control (RBAC) would ensure that, for example, only managers can edit or delete inventory items.
 
-Input Validation & Sanitization – All user inputs (search queries, job site names, item updates) should be validated both on the frontend and backend. This prevents malicious inputs that could cause XSS, SQL injection, or other injection-based attacks.
+Input Validation & Sanitization: All user inputs (search queries, form data) should be validated on both the frontend and backend. This prevents malicious inputs that could lead to XSS, SQL injection, or other injection-based attacks.
 
-Secure Communication – Enforce HTTPS for all requests between the client and server so sensitive data (like inventory updates or user credentials) is encrypted in transit.
+Secure Communication (HTTPS): Enforce HTTPS for all communication between the client and server. This ensures that sensitive data, like user credentials and inventory updates, is encrypted while in transit.
 
-API Security – Protect APIs with rate limiting, request validation, and possibly API keys or tokens. This prevents abuse, brute-force attempts, and unauthorized access.
+API Security: Protect APIs with measures like rate limiting, request validation, and API keys. This prevents abuse, brute-force attempts, and unauthorized access.
 
-Audit Trails & Logging – Track who made which changes to inventory items and job sites. Having logs ensures accountability and makes it easier to detect suspicious behavior.
+Audit Trails & Logging: Keep a log of who made which changes to inventory items and job sites. This ensures accountability and makes it easier to trace suspicious activity.
 
-Least Privilege Principle – Ensure services, users, and APIs only have access to what they absolutely need. This reduces the impact of a compromised account or service.
+How would you make this solution scale to millions of records?
+To handle very large datasets efficiently, both the frontend and backend would need optimization:
 
-2.How would you make this solution scale to millions of records?
+Pagination & Infinite Scrolling: Instead of loading all records at once, data should be fetched in chunks (server-side pagination). On the frontend, an infinite scroll or a "Load More" button would provide a smooth user experience without overwhelming the browser.
 
-To handle very large datasets efficiently, both frontend and backend need optimizations:
+Server-Side Search & Filtering: All search and filtering logic should be handled by the database, not the client. This ensures only relevant data is sent over the network. Creating database indexes on frequently queried fields (e.g., item name, category, status) would drastically improve query speed.
 
-Pagination & Infinite Scrolling – Instead of loading all job sites or inventory items at once, records should be fetched in chunks (server-side pagination). Infinite scrolling or “Load More” buttons improve performance and user experience.
+Caching: Use an in-memory cache like Redis for frequently accessed data (e.g., the main job sites list). Caching reduces database load and provides near-instant responses for common queries.
 
-Server-Side Search & Filtering – Searching and filtering should be performed by the database, not the client. This ensures only the relevant records are sent to the frontend. Proper indexing on frequently queried fields (e.g., job site name, status, category) drastically improves query speed.
+Frontend Performance Optimization: For rendering very long lists, use virtualization (e.g., react-window). This technique only renders the items currently visible on the screen, keeping the UI fast and responsive even with thousands of rows.
 
-Caching – Use an in-memory cache like Redis for frequently accessed queries (e.g., job sites list, recently updated items). Caching reduces database load and speeds up responses.
-
-Database Optimization – Optimize schema design, normalize where needed, and denormalize for performance-critical queries. Sharding or replication strategies may be required at very large scales.
-
-Frontend Optimization – Use lazy loading for components and virtualized lists (e.g., React Virtualized) to render only visible rows when displaying thousands of records. This keeps the UI smooth.
-
-Event-Driven Architecture – For very large-scale systems, consider breaking the app into microservices and using a message broker (e.g., Kafka, RabbitMQ) to handle updates asynchronously without blocking user operations.
-
-Horizontal Scaling – Deploy backend services with load balancing across multiple servers/containers so the system can handle spikes in traffic or large numbers of concurrent users.
+Database & Infrastructure Scaling: At a very large scale, you would need to optimize the database schema and potentially use strategies like sharding or read replicas. The backend services should be deployed with a load balancer to distribute traffic across multiple instances (horizontal scaling), ensuring high availability and performance.
